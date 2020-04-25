@@ -33,20 +33,15 @@ router.post('/reg', function(req, res){
         }else{
                 var myQuery = "INSERT INTO student SET ?";
                 db.query(myQuery, [post], function(err, results){
-                    if(err){
+                    if(err)throw err
                         
-                        res.send({
-                            data : err,
-                            code : 400,
-                            message : "The was an error !!!"
-                        });
+                        
                             
-                    }else{
+                    else{
                         
                         console.log("results")
                         res.send({
                             data : results,
-                            code : 200,
                             message : "Registered Successfully..."
             
                         })
@@ -89,5 +84,33 @@ router.put('/updateStudent', (req,res)=>{
     })
 
 
+
+    // view all students
+    router.get('/viewStudent', (req,res)=>{
+
+
+        datb.query('SELECT * FROM  student ',function(error,results,fields){
+      
+            if(error)
+            {
+                res.send({"failed":"error occurred"})
+            }
+            else{
+                       return res.send({data:results})
+                }
+      
+        });
+      });
+
+      //view a specific student
+      router.get('/aStudent/:student_no',(req, res) => {
+
+        let student_no ={student_no:req.body.student_no}
+     
+       datb.query('SELECT * FROM student WHERE  student_no = ?',[student_no], (error, results,fields) => {
+           if(error) throw error;
+           res.send({results});
+       });
+    });
 
 module.exports = router;
