@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2020 at 09:03 PM
+-- Generation Time: Apr 25, 2020 at 01:41 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -62,9 +62,15 @@ CREATE TABLE `student` (
   `course` varchar(500) NOT NULL,
   `year_of_admission` year(4) NOT NULL,
   `sponsor` varchar(500) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `confirm_password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_no`, `Full_names`, `Last_name`, `Id_no`, `gender`, `disability`, `contact_student`, `contact_guardian`, `campus_study`, `faculty`, `course`, `year_of_admission`, `sponsor`, `password`) VALUES
+(12345, 'Othandwayo', 'Manzi', 122425635, 0, 0, 78546321, 76545421, 'sosha south', 'Humanities', 'BED:Foundation phase', 2018, 'Funza lushaka', '$2a$10$L6CEv82uaIWoCBkICVYWnuPjS3E9TRhm2GZSANSI/OS/XR5wkqCIy');
 
 --
 -- Indexes for dumped tables

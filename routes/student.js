@@ -6,10 +6,11 @@ var bcrypt = require('bcrypt-nodejs');
 // register student account
 router.post('/reg', function(req, res){  
 
-    var post = {
+    let post = {
         "student_no": req.body.student_no,
-        "password": req.body.password,
+        "password": bcrypt.hashSync(password, null, null)
     };
+    var  password = req.body.password
     var  confirm_password = req.body.confirm_password
 
     if(password != confirm_password){
@@ -17,9 +18,10 @@ router.post('/reg', function(req, res){
         res.send({"message":"confirm password is not matched"})
 
     }
+
     var student_no = req.body. student_no;
     var myQuery1 = "SELECT * FROM student WHERE student_no = ?";
-    db.query(myQuery1,[student_no],function(err,results){
+    con.query(myQuery1,[student_no],function(err,results){
         
         if(results.length > 0){
 
@@ -32,7 +34,7 @@ router.post('/reg', function(req, res){
 
         }else{
                 var myQuery = "INSERT INTO student SET ?";
-                db.query(myQuery, [post], function(err, results){
+                con.query(myQuery, [post,confirm_password], function(err, results){
                     if(err)throw err
                         
                         
@@ -71,12 +73,12 @@ router.put('/updateStudent', (req,res)=>{
        }
   let student_no = (req.body.student_no)
        
-    datb.query('UPDATE student SET ? where student_no = "'+student_no+'"',[stud],function (error, results, fields)
+    con.query('UPDATE student SET ? where student_no = "'+student_no+'"',[stud],function (error, results, fields)
     {
         if (error) throw error;
         else
         {
-          datb.query('select * from student where student_no = "'+student_no+'"',[stud],function (error, results, fields){
+          con.query('select * from student where student_no = "'+student_no+'"',[stud],function (error, results, fields){
           return res.send({results})
       })
     }       
@@ -89,7 +91,7 @@ router.put('/updateStudent', (req,res)=>{
     router.get('/viewStudent', (req,res)=>{
 
 
-        datb.query('SELECT * FROM  student ',function(error,results,fields){
+        con.query('SELECT * FROM  student ',function(error,results,fields){
       
             if(error)
             {
@@ -103,13 +105,13 @@ router.put('/updateStudent', (req,res)=>{
       });
 
       //view a specific student
-      router.get('/aStudent/:student_no',(req, res) => {
+      router.get('/aStudent',(req, res) => {
 
         let student_no ={student_no:req.body.student_no}
      
-       datb.query('SELECT * FROM student WHERE  student_no = ?',[student_no], (error, results,fields) => {
+       con.query('SELECT * FROM student WHERE  student_no = ?',[student_no], (error, results,fields) => {
            if(error) throw error;
-           res.send({results});
+           res.send({data:results});
        });
     });
 
