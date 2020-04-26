@@ -54,22 +54,14 @@ router.post('/reg', function(req, res){
     })
 });
 
-// update student profile details
-router.put('/updateStudent', (req,res)=>{
+// update student Contacts
+router.put('/updateContact', (req,res)=>{
     let stud ={ 
-        Full_names:req.body.Full_names,
-        Last_name:req.body.Last_name,
-        Id_no:req.body.Id_no,
-        gender:req.body.gender,
-        disability:req.body.disability,
         contact_student:req.body.contact_student,
-        contact_guardian:req.body.contact_guardian,
-        campus_study:req.body.campus_study,
-        faculty:req.body.faculty,
-        course:req.body.course,
-        year_of_admission:req.body.year_of_admission,
-        sponsor:req.body.sponsor
-           
+        student_email:req.body.student_email,
+        guardian_FullName:req.body.guardian_FullName,
+        guardian_lastName:req.body.guardian_lastName,
+        contact_guardian:req.body.contact_guardian,      
        }
   let student_no = (req.body.student_no)
        
@@ -83,7 +75,59 @@ router.put('/updateStudent', (req,res)=>{
       })
     }       
       })
-    })
+    });
+
+    // update Medical Details
+    router.put('/updateMedicalAid', (req,res)=>{
+        let stud ={ 
+            medicalAid_no:req.body.medicalAid_no,
+            medicalAid_plan:req.body.medicalAid_plan,
+            mainMember_title:req.body.title,
+            mainMember_FullNames:req.body.mainMember_FullNames,
+            mainMember_lastName:req.body.mainMember_lastName,
+            mainID_no:req.body.mainID_no,
+            relationship:req.body.relationship
+               
+           }
+      let student_no = (req.body.student_no)
+           
+        con.query('UPDATE student SET ? where student_no = "'+student_no+'"',[stud],function (error, results, fields)
+        {
+            if (error) throw error;
+            else
+            {
+              con.query('select * from student where student_no = "'+student_no+'"',[stud],function (error, results, fields){
+              return res.send({results})
+          })
+        }       
+          })
+        })
+    
+
+// update course
+    router.put('/updateCourse', (req,res)=>{
+        let stud ={ 
+            campus_study:req.body.campus_study,
+            faculty:req.body.faculty,
+            course:req.body.course,
+            year_of_admission:req.body.year_of_admission,
+            sponsor:req.body.sponsor
+               
+           }
+      let student_no = (req.body.student_no)
+           
+        con.query('UPDATE student SET ? where student_no = "'+student_no+'"',[stud],function (error, results, fields)
+        {
+            if (error) throw error;
+            else
+            {
+              con.query('select * from student where student_no = "'+student_no+'"',[stud],function (error, results, fields){
+              return res.send({results})
+          })
+        }       
+          })
+        })
+    
 
 
 
@@ -116,3 +160,6 @@ router.put('/updateStudent', (req,res)=>{
     });
 
 module.exports = router;
+// medical aid name, medical aid number, medical aid plan, main title, full,names,lastname,idno
+//contact number, relationship to student 
+

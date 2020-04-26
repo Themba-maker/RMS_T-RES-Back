@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2020 at 01:41 PM
+-- Generation Time: Apr 26, 2020 at 06:15 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -56,7 +56,19 @@ CREATE TABLE `student` (
   `gender` tinyint(1) NOT NULL,
   `disability` tinyint(1) DEFAULT NULL,
   `contact_student` int(20) NOT NULL,
+  `student_email` varchar(255) NOT NULL,
+  `guardian_FullName` text NOT NULL,
+  `guardian_lastName` text NOT NULL,
   `contact_guardian` int(20) NOT NULL,
+  `medicalAid_name` varchar(255) NOT NULL,
+  `medicalAid_no` int(255) NOT NULL,
+  `medicalAid_plan` varchar(255) NOT NULL,
+  `mainMember_title` varchar(255) NOT NULL,
+  `mainMember_FullNames` varchar(255) NOT NULL,
+  `mainMember_lastName` varchar(255) NOT NULL,
+  `mainID_no` varchar(255) NOT NULL,
+  `mainContact_no` int(255) NOT NULL,
+  `relationship` varchar(255) NOT NULL,
   `campus_study` varchar(500) NOT NULL,
   `faculty` varchar(500) NOT NULL,
   `course` varchar(500) NOT NULL,
@@ -69,8 +81,8 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`student_no`, `Full_names`, `Last_name`, `Id_no`, `gender`, `disability`, `contact_student`, `contact_guardian`, `campus_study`, `faculty`, `course`, `year_of_admission`, `sponsor`, `password`) VALUES
-(12345, 'Othandwayo', 'Manzi', 122425635, 0, 0, 78546321, 76545421, 'sosha south', 'Humanities', 'BED:Foundation phase', 2018, 'Funza lushaka', '$2a$10$L6CEv82uaIWoCBkICVYWnuPjS3E9TRhm2GZSANSI/OS/XR5wkqCIy');
+INSERT INTO `student` (`student_no`, `Full_names`, `Last_name`, `Id_no`, `gender`, `disability`, `contact_student`, `student_email`, `guardian_FullName`, `guardian_lastName`, `contact_guardian`, `medicalAid_name`, `medicalAid_no`, `medicalAid_plan`, `mainMember_title`, `mainMember_FullNames`, `mainMember_lastName`, `mainID_no`, `mainContact_no`, `relationship`, `campus_study`, `faculty`, `course`, `year_of_admission`, `sponsor`, `password`) VALUES
+(12345, 'Othandwayo', 'Manzi', 122425635, 0, 0, 78546321, '', '', '', 76545421, '', 0, '', '', '', '', '', 0, '', 'sosha south', 'Humanities', 'BED:Foundation phase', 2018, 'Funza lushaka', '$2a$10$L6CEv82uaIWoCBkICVYWnuPjS3E9TRhm2GZSANSI/OS/XR5wkqCIy');
 
 --
 -- Indexes for dumped tables
@@ -87,7 +99,8 @@ ALTER TABLE `landlord`
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
-  ADD PRIMARY KEY (`student_no`);
+  ADD PRIMARY KEY (`student_no`),
+  ADD UNIQUE KEY `mainID_no` (`mainID_no`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
