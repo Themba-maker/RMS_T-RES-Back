@@ -45,4 +45,27 @@ router.get('/studentLogin', function(req, res) {
  });
   
 
+ router.get('/landlogin', function(req, res) {
+
+    let email = req.body.email_address;
+    var password = req.body.password;
+    
+    if(!email || !password)
+    {
+        res.send({message:'enter all the fields'})
+    }
+   
+    datb.query('select * from landlord where email_address = ? AND password =?',[email,password],(error,results)=>{  
+       if(error)throw error;
+                else{
+                    jwt.sign({email},'secretkey',{expiresIn:'60s'},(err,token)=>{
+                        res.json({
+                            token,
+                            data:results
+                        });
+                    });  
+                }
+    }); 
+ });
+
 module.exports = router;

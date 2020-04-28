@@ -4,7 +4,7 @@ router = express.Router();
 var bcrypt = require('bcrypt-nodejs');
 
 // register student account
-router.post('/reg', function(req, res){  
+router.post('/studreg', function(req, res){  
 
     let post = {
         "student_no": req.body.student_no,
@@ -178,7 +178,7 @@ router.put('/updateContact', (req,res)=>{
 
 
 
-    
+
 
     // const storage = multer.diskStorage({
 
