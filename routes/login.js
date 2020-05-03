@@ -67,5 +67,6 @@ router.get('/studentLogin', function(req, res) {
                 }
     }); 
  });
+ 
 
 module.exports = router;

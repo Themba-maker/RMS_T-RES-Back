@@ -168,11 +168,25 @@ router.put('/updateContact', (req,res)=>{
      
        con.query('SELECT * FROM property WHERE  student_no = ?',[student_no], (error, results,fields) => {
            if(error) throw error;
+           else
            res.send({data:results});
        });
     });
 
+// log issue to landlord
 
+router.post('/issues',(req,res)=>{
+
+    var issue= issues.req.body.issues;
+    con.query('INSERT INTO landlord SET ? ',[issue],(error,reults,fields)=>{
+      
+        if(error) throw error;
+        else{
+            return res.send({data:results})
+        }
+
+    })
+})
 
 
 
