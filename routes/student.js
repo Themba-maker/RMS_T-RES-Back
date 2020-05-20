@@ -160,20 +160,20 @@ router.put('/updateContact', (req,res)=>{
     });
 
 
-    //view a student room in a property
+    //view a student room in from property
 
     router.get('/aRoom',(req, res) => {
 
         let student_no ={student_no:req.body.student_no}
      
-       con.query('SELECT * FROM property WHERE  student_no = ?',[student_no], (error, results,fields) => {
+       con.query('SELECT * FROM tenant WHERE  student_no = ?',[student_no], (error, results,fields) => {
            if(error) throw error;
            else
            res.send({data:results});
        });
     });
 
-// log issue to landlord
+// student log issue to landlord
 
 router.post('/issues',(req,res)=>{
 
@@ -183,11 +183,27 @@ router.post('/issues',(req,res)=>{
         if(error) throw error;
         else{
             return res.send({data:results})
-        }
+        }  
 
     })
 })
 
+
+// count the total number of students 
+
+route.get('/totStudent', (req, res) => {
+    con.query('SELECT count(student_no) AS "total students" FROM student', (err, results, fields) => {
+        if (!err)
+  
+            res.send({status:200,results});
+        else
+            res.send(err);
+            res.end();
+    })
+  });
+
+
+  
 
 
 
