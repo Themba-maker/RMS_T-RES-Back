@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2020 at 12:55 PM
+-- Generation Time: May 25, 2020 at 07:00 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -101,6 +101,31 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`student_no`, `Full_names`, `Last_name`, `Id_no`, `gender`, `disability`, `contact_student`, `student_email`, `guardian_FullName`, `guardian_lastName`, `contact_guardian`, `medicalAid_name`, `medicalAid_no`, `medicalAid_plan`, `mainMember_title`, `mainMember_FullNames`, `mainMember_lastName`, `mainID_no`, `mainContact_no`, `relationship`, `campus_study`, `faculty`, `course`, `year_of_admission`, `sponsor`, `password`) VALUES
 (12345, 'Othandwayo', 'Manzi', 122425635, '0', '0', 78546321, '', '', '', 76545421, '', 0, '', '', '', '', '', 0, '', 'sosha south', 'Humanities', 'BED:Foundation phase', 2018, 'Funza lushaka', '$2a$10$L6CEv82uaIWoCBkICVYWnuPjS3E9TRhm2GZSANSI/OS/XR5wkqCIy');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tenant`
+--
+
+CREATE TABLE `tenant` (
+  `student_no` varchar(255) DEFAULT NULL,
+  `landlord_email` varchar(255) NOT NULL,
+  `floor` int(255) NOT NULL DEFAULT 0,
+  `room_no` int(255) NOT NULL DEFAULT 0,
+  `bed_no` int(255) NOT NULL DEFAULT 0,
+  `date_located` date NOT NULL DEFAULT current_timestamp(),
+  `apply_date` date NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(255) NOT NULL DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tenant`
+--
+
+INSERT INTO `tenant` (`student_no`, `landlord_email`, `floor`, `room_no`, `bed_no`, `date_located`, `apply_date`, `status`) VALUES
+('216168631', 'boss@gmail.com', 2, 12, 1, '0000-00-00', '0000-00-00', 'Pending'),
+('216168631', 'boss@gmail.com', 2, 12, 1, '0000-00-00', '0000-00-00', 'Pending');
 
 --
 -- Indexes for dumped tables

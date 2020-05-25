@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
  router.use(bodyParser.json());
 
 
-router.get('/studentLogin', function(req, res) {
+router.post('/studentLogin', function(req, res) {
 
     let student_no = req.body.student_no;
     let password = req.body.password;
@@ -45,7 +45,7 @@ router.get('/studentLogin', function(req, res) {
  });
   
 
- router.get('/landlogin', function(req, res) {
+ router.post('/landlogin', function(req, res) {
 
     let email = req.body.email_address;
     var password = req.body.password;
@@ -67,6 +67,7 @@ router.get('/studentLogin', function(req, res) {
                 }
     }); 
  });
+ 
  
 
 module.exports = router;
