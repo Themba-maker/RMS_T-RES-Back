@@ -191,7 +191,7 @@ router.post('/issues',(req,res)=>{
 
 // count the total number of students 
 
-route.get('/totStudent', (req, res) => {
+router.get('/totStudent', (req, res) => {
     con.query('SELECT count(student_no) AS "total students" FROM student', (err, results, fields) => {
         if (!err)
   

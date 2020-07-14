@@ -6,9 +6,10 @@ router = express.Router();
 
 router.post('/landlordreg',(req,res)=>{
  
-    if(req.body.password!=req.body.password_confirm){
-        res.send("passwords do not match")
-    }else{
+   // if(req.body.password!=req.body.password_confirm){
+    //    res.send("passwords do not match")
+   // }
+  // else{
         var email = req.body.email_address;
         var sql = "SELECT * FROM landlord WHERE email_address = ?";
         con.query(sql,[email],function(err,results){
@@ -40,7 +41,8 @@ router.post('/landlordreg',(req,res)=>{
       })
     }
     
-});
+//}
+);
 
 //update profile
 
