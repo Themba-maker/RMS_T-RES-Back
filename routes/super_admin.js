@@ -29,7 +29,7 @@ router = express.Router();
 
             let registration_no = req.body.registration_no
             datb.query('UPDATE landlord  SET status = 1 where registration_no =  "'+registration_no+'"',(err,results,fields)=>
-            {
+             {
                
            if(err) throw err
          
