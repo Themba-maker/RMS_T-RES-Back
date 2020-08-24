@@ -9,8 +9,8 @@ router.post('/landlordreg',(req,res)=>{
  if(req.body.password!=req.body.password_confirm){
         res.send("passwords do not match")
     }else{
-        var email = req.body.email_address;
-        var sql = "SELECT * FROM landlord WHERE email_address = ?";
+        var email = req.body.landlord_email;
+        var sql = "SELECT * FROM landlord WHERE landlord_email = ?";
         con.query(sql,[email],function(err,results){
          if(results.length>0){
     
@@ -20,7 +20,7 @@ router.post('/landlordreg',(req,res)=>{
     
             }else{
                 let lordData={
-                    email_address: req.body.email_address,
+                    landlord_email: req.body.landlord_email,
                     password : req.body.password
                 }
 
@@ -54,11 +54,14 @@ router.put('/updateLandlord', (req,res)=>{
        zip_code:req.body.zip_code,
        province:req.body.province,
        country:req.body.country,
-        telephone:req.body.telephone 
+        telephone:req.body.telephone,
+        full_name:req.body.full_name,
+        property_name:req.body.full_name
+
        }
-  let email = req.body.email_address;
+  let email = req.body.landlord_email;
        
-    con.query('UPDATE landlord SET ? where email_address = "'+email+'"',[lordData],function (error, results, fields)
+    con.query('UPDATE landlord SET ? where landlord_email = "'+email+'"',[lordData],function (error, results, fields)
     {
         if (error) throw error;
         else
@@ -74,20 +77,13 @@ router.put('/updateLandlord', (req,res)=>{
 router.post('/addproperty',(req,res)=>{
         let propData = {
             landlord_email:req.body.landlord_email,
-           
-           
-           prop_name:req.body.prop_name,
             campus:req.body.campus,
             numFemale_beds:req.body.numFemale_beds,
             numMale_beds:req.body.numMale_beds,
             bedsPerRoom:req.body.bedsPerRoom,
             num_floors:req.body.num_floors,
             num_rooms:req.body.num_rooms
-
-
-
-
-            
+ 
         };   
 
 
@@ -116,7 +112,7 @@ let status="PENDING";
          status:status
 }
     
-sql="INSERT INTO tenant SET ?";
+sql="INSERT INTO room SET ?";
      con.query(sql,[studData],function(err,rows,fields){
          if (err) throw err;
          else{
@@ -133,7 +129,7 @@ sql="INSERT INTO tenant SET ?";
 router.get('/getapplicants',(req,res)=>{
     let landlord_email=req.body.landlord_email;
    let status="PENDING";
-  let sql ='SELECT * FROM tenant WHERE landlord_email="'+landlord_email+'" AND status="'+status+'"';
+  let sql ='SELECT * FROM room WHERE landlord_email="'+landlord_email+'" AND status="'+status+'"';
 
             con.query(sql,function(err,rows,fields){
                 if (err)throw err;
@@ -149,7 +145,7 @@ router.put('/locateStudent',(req,res)=>{
  var landlord_email=req.body.landlord_email;
  var student_no=req.body.student_no;
 
-let sql = 'UPDATE tenant SET room_no= (SELECT occupied_rooms FROM property WHERE landlord_email= "'+landlord_email+'")+1,floor=1  WHERE student_no="'+student_no+'"';
+let sql = 'UPDATE room SET room_no= (SELECT occupied_rooms FROM property WHERE landlord_email= "'+landlord_email+'")+1,floor=1  WHERE student_no="'+student_no+'"';
 
 con.query(sql,function(err,rows,fields){
   if (err)throw err;
@@ -158,27 +154,27 @@ con.query(sql,function(err,rows,fields){
        con.query(sql2,function(err,rows,fields){
         if(err) throw err;
         else{
-            sql3 = 'UPDATE tenant SET floor = 1 where room_no <=  (SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")';
+            sql3 = 'UPDATE room SET floor = 1 where room_no <=  (SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")';
            con.query(sql3,function(err,results){
             if (err)throw err;
             else{
                     if(results.changedRows==0){
-                        sql4 = 'UPDATE tenant SET floor = 2 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*2)';
+                        sql4 = 'UPDATE room SET floor = 2 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*2)';
                         con.query(sql4,function(err,results){
                          if(err)throw err;
                          else{
                                if(results.changedRows==0){
-                                sql5 = 'UPDATE tenant SET floor = 3 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*3)';
+                                sql5 = 'UPDATE room SET floor = 3 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*3)';
                                 con.query(sql5,function(err,results){
                                     if(err)throw err;
                                     else{
                                         if(results.changedRows==0){
-                                            sql6 = 'UPDATE tenant SET floor = 4 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*4)';
+                                            sql6 = 'UPDATE room SET floor = 4 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*4)';
                                             con.query(sql6,function(err,results){
                                                 if(err)throw err;
                                                 else{
                                                    if(results.changedRows==0){
-                                                    sql7 = 'UPDATE tenant SET floor = 5 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*5)';
+                                                    sql7 = 'UPDATE room SET floor = 5 where room_no <=  ((SELECT num_rooms FROM property WHERE landlord_email= "'+landlord_email+'") /  (SELECT num_floors FROM property WHERE landlord_email= "'+landlord_email+'")*5)';
                                                     con.query(sql7,function(err,results){
                                                         if(results.changedRows==0){
                                                             res.send('floor unlocated')
@@ -222,7 +218,34 @@ con.query(sql,function(err,rows,fields){
 })
 
 
+//****************************************************
 
+
+//issues
+router.put('/studentIssue',(res,req)=>{
+ 
+  
+    //     var  student_no=req.body.student_no;
+    //     var issue_type=req.body.issue_type;
+    //    var issue_description = req.body.issue_description;
+    // //    var landlord_email;
+    
+
+
+//let sql = 'UPDATE room SET room_no= (SELECT occupied_rooms FROM property WHERE landlord_email= "'+landlord_email+'")+1,floor=1  WHERE student_no="'+student_no+'"';
+
+   //let sql ='INSERT INTO student_issue(student_no,issue_type,issue_description,landlord_email) VALUES("'+req.body.student_no+'","'+req.body.issue_type+'","'+req.body.issue_description+'","'+landlord_email+'=SELECT landlord_email from room where student_no="'+req.body.student_no+'"")';  
+let sql = 'UPDATE room SET issue_type="'+req.body.issue_type+'",issue_description="'+req.body.issue_description+'" WHERE student_no="'+req.body.student_no+'"';
+   con.query(sql,function(err,results){
+       
+    if (err) throw error;
+    else
+    {
+      res.send('Your report of concerns has been successfully sent');
+    }
+
+   })
+})
  
 module.exports =router ;
 
