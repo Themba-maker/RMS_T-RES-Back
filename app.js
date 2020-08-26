@@ -16,9 +16,6 @@ app.use(function (req, res, next) {
   });
 
 
-
-
-  ///login sessions
   const ONE_HOUR = 1000 * 60 * 60;
  
    ses_name = 'rms',
@@ -65,7 +62,8 @@ app.get('/',(req,res)=>{
 
  app.use('/', require('./routes/landlord'));
  app.use('/', require('./routes/student'));
- app.use('/', require('./routes/issues'));
+ app.use('/picUploads',express.static('picUploads'));
+ app.use('/uploadpic',express.static('uploadpic'));
  app.use('/', require('./routes/admin'));
  
 
@@ -73,7 +71,5 @@ app.get('/',(req,res)=>{
 const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 9000;
 const server = app.listen(port, function () {
                           console.log('Server listening on port ' + port);
-                            
-                        
-                        });
+                             });
 
